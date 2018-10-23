@@ -1,0 +1,106 @@
+entity League {
+	leagueName	String
+}
+
+entity Tournament {
+	tournamentName String
+} 
+
+entity Category {
+	categoryName String
+    branch Branch
+}
+entity Club {
+	clubName String
+}
+
+entity Team {
+	teamName String
+}
+
+entity Player {
+	firstName String
+    lastName String
+    position String
+    number Long
+    height Long
+    weight Long
+    birthDate Date    
+}
+
+entity Round {
+	roundName String
+}
+
+entity Jornada {
+	jornadaName String
+} 
+
+entity Game {
+ 	teamHome String
+    teamVisitor String
+    winner String
+    gameDate Date
+}
+
+entity BoxScore {
+
+}
+entity Venue {
+	venueName String
+    street String
+    number String
+    zipcode String
+    city String
+    phoneNumber String
+}
+
+entity Country {
+	countryName String
+}
+
+entity Province {
+	provinceName String
+}
+
+entity Court {
+	courtName String 
+}
+
+entity Referee {
+	refereeName String
+}
+
+enum Branch {
+	FEMENIL,
+    VARONIL
+}
+
+relationship OneToMany {
+	League{tournament} to Tournament,
+    League{venue} to Venue,
+    Tournament{Category} to Category,
+    Tournament{round} to Round,
+    Round{jornada} to Jornada, 
+    Game{team} to Team,
+    Game{referee} to Referee,
+    Jornada{game} to Game,
+    Category{Team} to Team,
+    Team{Player} to Player,
+    Venue{court} to Court
+    Club{team} to Team,
+    Country{province} to Province
+}
+
+relationship ManyToOne {
+	Player{coach} to Player,
+}
+relationship OneToOne {
+	Game{boxScore} to BoxScore
+}
+relationship OneToOne {
+	Venue{province} to Province
+}
+
+service all with serviceImpl
+
